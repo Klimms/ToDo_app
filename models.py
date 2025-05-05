@@ -15,12 +15,10 @@ class Base(AsyncAttrs, DeclarativeBase):
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column()
-    tg_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id: Mapped[int] = mapped_column(BigInteger)
     username: Mapped[str] = mapped_column(String(32))
     full_name: Mapped[str] = mapped_column(String(64))
-    created_at: Mapped[DateTime] = mapped_column(DateTime)
-    updated_at: Mapped[DateTime] = mapped_column(DateTime)
     
     
 class Task(Base):
@@ -29,7 +27,7 @@ class Task(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(512))
     competed: Mapped[bool] = mapped_column(default=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.tg_id"), ondelete="CASCADE")
+    user: Mapped[int] = mapped_column(ForeignKey("users.tg_id"), ondelete="CASCADE")
     
     
 async def init_db():
