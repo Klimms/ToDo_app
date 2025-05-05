@@ -29,7 +29,7 @@ class Task(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(512))
     competed: Mapped[bool] = mapped_column(default=False)
-    user: Mapped[int] = mapped_column(ForeignKey("users.tg_id"), ondelete='CASCADE')
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.tg_id"), ondelete="CASCADE")
     
     
 async def init_db():
