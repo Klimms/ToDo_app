@@ -17,6 +17,10 @@ class CompleteTask(BaseModel):
     id: int
 
 
+class DeleteTask(BaseModel):
+    id: int
+
+
 @asynccontextmanager
 async def lifespan(app_: FastAPI):
     await init_db()
@@ -59,4 +63,10 @@ async def add_task(task: AddTask):
 @app.patch("/api/completed")
 async def complete_task(task: CompleteTask):
     await rq.update_task(task.id)
+    return {'status': 'ok'}
+
+
+@app.delete("/api/delete")
+async def delete_task(task: DeleteTask):
+    await rq.delete_task(task.id)
     return {'status': 'ok'}
